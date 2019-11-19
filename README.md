@@ -9,8 +9,8 @@
 | Helm       | >=2.12.1 and <=2.13.1 |
 ## Download Framework
 ```bash
-git clone https://github.com/onap/demo.git
-DA_WORKING_DIR=$PWD/demo/vnfs/DAaaS/deploy
+git clone "https://gerrit.akraino.org/r/icn/daaas"
+DA_WORKING_DIR=$PWD/deploy
 ```
 
 ## Install Istio Service Mesh
