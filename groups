@@ -1,3 +1,4 @@
 # UUID                                                                       	Group Name
 #
 ldap:cn=akraino-gerrit-icn-daaas-committers,ou=Groups,dc=freestandards,dc=org	ldap/akraino-gerrit-icn-daaas-committers
+ldap:cn=lf-releng,ou=Groups,dc=freestandards,dc=org                          	ldap/lf-releng
