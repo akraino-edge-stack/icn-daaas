@@ -1,0 +1,20 @@
+{{- if .Values.enabled }}
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: remote-config-operator
+  labels:
+    app: {{ template "remote-config-operator.name" . }}
+    chart: {{ template "remote-config-operator.chart" . }}
+    component: rolebinding
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+subjects:
+- kind: ServiceAccount
+  name: remote-config-operator
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: remote-config-operator
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
