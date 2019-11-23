@@ -79,7 +79,16 @@ func schema_pkg_apis_onap_v1alpha1_PrometheusRemoteEndpointSpec(ref common.Refer
 					},
 					"filterSelector": {
 						SchemaProps: spec.SchemaProps{
-							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector"),
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
 						},
 					},
 					"type": {
@@ -110,7 +119,7 @@ func schema_pkg_apis_onap_v1alpha1_PrometheusRemoteEndpointSpec(ref common.Refer
 			},
 		},
 		Dependencies: []string{
-			"./pkg/apis/onap/v1alpha1.QueueConfig", "k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector"},
+			"./pkg/apis/onap/v1alpha1.QueueConfig"},
 	}
 }
 
@@ -259,6 +268,52 @@ func schema_pkg_apis_onap_v1alpha1_RemoteFilterActionStatus(ref common.Reference
 			SchemaProps: spec.SchemaProps{
 				Description: "RemoteFilterActionStatus defines the observed state of RemoteFilterAction",
 				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"action": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"regex": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"sourceLabels": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"targetLabel": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"replacement": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"status", "action", "regex", "sourceLabels", "targetLabel"},
 			},
 		},
 	}
