@@ -7,12 +7,12 @@ import (
 // PrometheusRemoteEndpointSpec defines the desired state of PrometheusRemoteEndpoint
 // +k8s:openapi-gen=true
 type PrometheusRemoteEndpointSpec struct {
-	AdapterURL     string                `json:"adapterURL"`
-	FilterSelector *metav1.LabelSelector `json:"filterSelector,omitempty"`
-	Type           string                `json:"type"`
-	KafkaConfig    string                `json:"kafkaConfig,omitempty"`
-	QueueConfig    QueueConfig           `json:"queueConfig,omitempty"`
-	RemoteTimeout  string                `json:"remoteTimeout,omitempty"`
+	AdapterURL     string            `json:"adapterURL"`
+	FilterSelector map[string]string `json:"filterSelector,omitempty"`
+	Type           string            `json:"type"`
+	KafkaConfig    string            `json:"kafkaConfig,omitempty"`
+	QueueConfig    QueueConfig       `json:"queueConfig,omitempty"`
+	RemoteTimeout  string            `json:"remoteTimeout,omitempty"`
 }
 
 // KafkaConfig - defines the desired remote kafka writer configurations
@@ -20,8 +20,8 @@ type KafkaConfig struct {
 	BrokerURL    string `json:"bootstrap.servers"`
 	Topic        string `json:"topic"`
 	UsePartition bool   `json:"usePartition"`
-	BatchMsgNum  int    `json:"batch.num.messages,omitempty`
-	Compression  string `json:"compression.codec,omitempty`
+	BatchMsgNum  int    `json:"batch.num.messages,omitempty"`
+	Compression  string `json:"compression.codec,omitempty"`
 }
 
 // QueueConfig - defines the prometheus remote write queue configurations
