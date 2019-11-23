@@ -1,0 +1,39 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remote-config-operator
+  labels:
+    app: {{ template "remote-config-operator.name" . }}
+    chart: {{ template "remote-config-operator.chart" . }}
+    component: deployment
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: remote-config-operator
+  template:
+    metadata:
+      labels:
+        name: remote-config-operator
+    spec:
+      serviceAccountName: remote-config-operator
+      containers:
+        - name: remote-config-operator
+          # Replace this with the built image name
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command:
+          - remote-config-operator
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: WATCH_NAMESPACE
+              value: {{ default "" .Values.watch.namespace | quote }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "remote-config-operator"
+{{- end }}
