@@ -47,6 +47,27 @@ spec:
           type: object
         status:
           description: RemoteFilterActionStatus defines the observed state of RemoteFilterAction
+          properties:
+            action:
+              type: string
+            regex:
+              type: string
+            replacement:
+              type: string
+            sourceLabels:
+              items:
+                type: string
+              type: array
+            status:
+              type: string
+            targetLabel:
+              type: string
+          required:
+          - action
+          - regex
+          - sourceLabels
+          - status
+          - targetLabel
           type: object
       type: object
   version: v1alpha1

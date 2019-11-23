@@ -17,6 +17,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"reflect"
 	onapv1alpha1 "remote-config-operator/pkg/apis/onap/v1alpha1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -37,12 +38,12 @@ func GetWatchLabels() (string, error) {
 }
 
 // GetPrometheusRemoteEndpoint returns the prometheusRemoteEndpoint instance in the namespace ns
-func GetPrometheusRemoteEndpoint(rc client.Client, ns string) (*onapv1alpha1.PrometheusRemoteEndpoint, error) {
+func GetPrometheusRemoteEndpoint(rc client.Client, ns string, value string) (*onapv1alpha1.PrometheusRemoteEndpoint, error) {
 	// Get the PrometheusRemoteEndpoint instance in current namespace to rebuild conf.
 	preList := &onapv1alpha1.PrometheusRemoteEndpointList{}
 	preOpts := []client.ListOption{
-		client.InNamespace("edge1"),
-		client.MatchingLabels{"remote": "m3db1"},
+		client.InNamespace(ns),
+		client.MatchingLabels{"filterSelector": "remote=" + value},
 	}
 
 	err := rc.List(context.TODO(), preList, preOpts...)
@@ -52,7 +53,13 @@ func GetPrometheusRemoteEndpoint(rc client.Client, ns string) (*onapv1alpha1.Pro
 	if preList.Items == nil || len(preList.Items) == 0 {
 		return nil, err
 	}
-	prometheusRemoteEndpoint := &preList.Items[0]
+	var prometheusRemoteEndpoint *onapv1alpha1.PrometheusRemoteEndpoint
+	for i, pre := range preList.Items {
+		if pre.Spec.FilterSelector["remote"] == value {
+			prometheusRemoteEndpoint = &preList.Items[i]
+			break
+		}
+	}
 	return prometheusRemoteEndpoint, nil
 }
 
@@ -74,4 +81,10 @@ func Remove(list []string, s string) []string {
 		}
 	}
 	return list
+}
+
+// compareSourceLabels compares sourceLabels within remoteWrite and spec
+func CompareLabels(a []string, b []string) bool {
+	reflect.DeepEqual(a, b)
+	return true
 }
