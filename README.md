@@ -1,4 +1,4 @@
-# Distributed Analytics Framework
+# Distributed AI and Analytics Stack
 
 
 ## Pre-requisites
@@ -81,7 +81,7 @@ kubectl get crds | grep rook
 ```
 If this return results like :
 ```
-otc@otconap7 /var/lib/rook $  kubectl get crds | grep rook
+$ kubectl get crds | grep rook
 cephblockpools.ceph.rook.io         2019-07-19T18:19:05Z
 cephclusters.ceph.rook.io           2019-07-19T18:19:05Z
 cephfilesystems.ceph.rook.io        2019-07-19T18:19:05Z

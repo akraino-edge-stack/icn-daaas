@@ -1,0 +1,2 @@
+cd deploy
+make all
