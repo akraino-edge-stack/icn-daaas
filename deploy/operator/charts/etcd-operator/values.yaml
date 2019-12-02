@@ -2,32 +2,36 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Enable etcd-operator
+# To be used from parent operator package requirements.yaml
+enabled: true
+
+global:
+  ## Reference to one or more secrets to be used when pulling images
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  imagePullSecrets: []
+  # - name: "image-pull-secret"
+
 ## Install Default RBAC roles and bindings
 rbac:
   create: true
-  apiVersion: v1beta1
+  apiVersion: v1
 
-## Service account names and whether to create them
+## Service account name and whether to create it
 serviceAccount:
-  etcdOperatorServiceAccount:
-    create: true
-    name:
-  backupOperatorServiceAccount:
-    create: true
-    name:
-  restoreOperatorServiceAccount:
-    create: true
-    name:
+  create: true
+  name:
 
 # Select what to deploy
 deployments:
   etcdOperator: true
   # one time deployment, delete once completed,
   # Ref: https://github.com/coreos/etcd-operator/blob/master/doc/user/walkthrough/backup-operator.md
-  backupOperator: true
+  backupOperator: false
   # one time deployment, delete once completed
   # Ref: https://github.com/coreos/etcd-operator/blob/master/doc/user/walkthrough/restore-operator.md
-  restoreOperator: true
+  restoreOperator: false
 
 # creates custom resources, not all required,
 # you could use `helm template --values <values.yaml> --name release_name ... `
@@ -43,7 +47,7 @@ etcdOperator:
   replicaCount: 1
   image:
     repository: quay.io/coreos/etcd-operator
-    tag: v0.9.3
+    tag: v0.9.4
     pullPolicy: Always
   resources:
     cpu: 100m
@@ -53,8 +57,7 @@ etcdOperator:
   nodeSelector: {}
   ## additional command arguments go here; will be translated to `--key=value` form
   ## e.g., analytics: true
-  commandArgs:
-    cluster-wide: true
+  commandArgs: {}
   ## Configurable health checks against the /readyz endpoint that etcd-operator exposes
   readinessProbe:
     enabled: false
@@ -76,7 +79,7 @@ backupOperator:
   replicaCount: 1
   image:
     repository: quay.io/coreos/etcd-operator
-    tag: v0.9.3
+    tag: v0.9.4
     pullPolicy: Always
   resources:
     cpu: 100m
@@ -92,6 +95,8 @@ backupOperator:
   ## additional command arguments go here; will be translated to `--key=value` form
   ## e.g., analytics: true
   commandArgs: {}
+  securityContext: {}
+  tolerations: []
 
 # restore spec
 restoreOperator:
@@ -99,7 +104,7 @@ restoreOperator:
   replicaCount: 1
   image:
     repository: quay.io/coreos/etcd-operator
-    tag: v0.9.3
+    tag: v0.9.4
     pullPolicy: Always
   port: 19999
   resources:
@@ -117,15 +122,17 @@ restoreOperator:
   ## additional command arguments go here; will be translated to `--key=value` form
   ## e.g., analytics: true
   commandArgs: {}
+  securityContext: {}
+  tolerations: []
 
 ## etcd-cluster specific values
 etcdCluster:
-  name: etcd
+  name: etcd-cluster
   size: 3
-  version: 3.2.25
+  version: 3.3.3
   image:
     repository: quay.io/coreos/etcd
-    tag: v3.2.25
+    tag: v3.3.3
     pullPolicy: Always
   enableTLS: false
   # TLS configs
@@ -151,3 +158,5 @@ etcdCluster:
     ## Node labels for etcd pod assignment
     ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
     nodeSelector: {}
+    securityContext: {}
+    tolerations: []
