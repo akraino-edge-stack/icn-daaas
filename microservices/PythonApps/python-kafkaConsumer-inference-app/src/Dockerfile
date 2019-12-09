@@ -32,4 +32,5 @@ RUN pip install ptvsd
 COPY . ./
 
 # Start the server when the container launches
-CMD ["python3", "-m", "ptvsd", "--host", "localhost", "--port", "5000", "--wait", "/src/inferenceApp/main.py"]
+#CMD ["python3", "-m", "ptvsd", "--host", "localhost", "--port", "5000", "--wait", "/src/inferenceApp/main.py"]
+CMD ["pythom3", "-m", "/src/inferenceApp/main.py"]
