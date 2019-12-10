@@ -15,6 +15,7 @@
 version: 0.10.0
 
 name: metallb
+apiVersion: v1
 appVersion: 0.8.1
 description: MetalLB is a load-balancer implementation for bare metal Kubernetes clusters
 keywords: ["load-balancer", "balancer", "lb", "bgp", "arp", "vrrp", "vip"]
