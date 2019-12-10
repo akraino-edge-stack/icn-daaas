@@ -17,4 +17,5 @@
 name: istio-operator
 version: 0.0.15
 description: istio-operator manages Istio deployments on Kubernetes
+apiVersion: v1
 appVersion: 0.2.1
