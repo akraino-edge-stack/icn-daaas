@@ -8,7 +8,7 @@
 ##############################################################################
 
 # Common
-VERSION := $(shell git describe --tags)
+VERSION := $(shell git describe --tags --always)
 BUILD := $(shell git rev-parse --short HEAD)
 PROJECTNAME := $(shell basename "$(pwd)")
 
@@ -20,6 +20,9 @@ IMAGE_NAME := dcr.cluster.local:32644/visualization-operator:latest
 export GO111MODULE=on
 
 .PHONY: clean publish
+
+## all: Delete the image, binary, complete build, test and run coverage
+all: build
 
 ## build: Generate the k8s and openapi artifacts using operator-sdk
 build: clean 

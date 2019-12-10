@@ -1,19 +1,20 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: collectdglobals.onap.org
+  name: collectdplugins.onap.org
 spec:
   group: onap.org
   names:
-    kind: CollectdGlobal
-    listKind: CollectdGlobalList
-    plural: collectdglobals
-    singular: collectdglobal
-  scope: Namespaced
+    kind: CollectdPlugin
+    listKind: CollectdPluginList
+    plural: collectdplugins
+    singular: collectdplugin
+  scope: ""
   subresources:
     status: {}
   validation:
     openAPIV3Schema:
+      description: CollectdPlugin is the Schema for the collectdplugins API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -28,27 +29,26 @@ spec:
         metadata:
           type: object
         spec:
+          description: CollectdPluginSpec defines the desired state of CollectdPlugin
           properties:
-            configMap:
+            pluginConf:
               type: string
-            globalOptions:
+            pluginName:
               description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                 Important: Run "operator-sdk generate k8s" to regenerate code after
                 modifying this file Add custom validation using kubebuilder tags:
                 https://book.kubebuilder.io/beyond_basics/generating_crd.html'
               type: string
           required:
-          - globalOptions
+          - pluginConf
+          - pluginName
           type: object
         status:
+          description: CollectdPluginStatus defines the observed state of CollectdPlugin
           properties:
             collectdAgents:
-              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                of cluster Important: Run "operator-sdk generate k8s" to regenerate
-                code after modifying this file Add custom validation using kubebuilder
-                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-                CollectdAgents are the collectd pods in the Daemonset Status can be
-                one of "", Created, Deleting, Applied, Deprecated'
+              description: CollectdAgents are the collectd pods in the Daemonset Status
+                can be one of "", Created, Deleting, Applied, Deprecated
               items:
                 type: string
               type: array
@@ -57,6 +57,7 @@ spec:
           required:
           - status
           type: object
+      type: object
   version: v1alpha1
   versions:
   - name: v1alpha1

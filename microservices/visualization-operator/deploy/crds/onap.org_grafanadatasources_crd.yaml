@@ -9,11 +9,12 @@ spec:
     listKind: GrafanaDataSourceList
     plural: grafanadatasources
     singular: grafanadatasource
-  scope: Namespaced
+  scope: ""
   subresources:
     status: {}
   validation:
     openAPIV3Schema:
+      description: GrafanaDataSource is the Schema for the grafanadatasources API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -28,9 +29,11 @@ spec:
         metadata:
           type: object
         spec:
+          description: GrafanaDataSourceSpec defines the desired state of GrafanaDataSource
           properties:
             datasources:
               items:
+                description: Datasource defines the fields in a GrafanaDataSource
                 properties:
                   access:
                     type: string
@@ -63,10 +66,10 @@ spec:
                   withCredentials:
                     type: boolean
                 required:
+                - access
                 - name
                 - type
                 - url
-                - access
                 type: object
               type: array
             grafana:
@@ -78,7 +81,9 @@ spec:
           - grafana
           type: object
         status:
+          description: GrafanaDataSourceStatus defines the observed state of GrafanaDataSource
           type: object
+      type: object
   version: v1alpha1
   versions:
   - name: v1alpha1

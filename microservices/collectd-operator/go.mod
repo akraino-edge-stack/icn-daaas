@@ -1,7 +1,6 @@
 module collectd-operator
 
 require (
-	github.com/NYTimes/gziphandler v1.0.1 // indirect
 	github.com/go-logr/logr v0.1.0
 	github.com/go-openapi/spec v0.19.0
 	github.com/operator-framework/operator-sdk v0.9.1-0.20190807211748-fe8c81ad98c0
@@ -31,3 +30,5 @@ replace (
 )
 
 replace github.com/operator-framework/operator-sdk => github.com/operator-framework/operator-sdk v0.9.0
+
+go 1.13
