@@ -8,7 +8,7 @@
 ##############################################################################
 
 # Common
-VERSION := $(shell git describe --tags)
+VERSION := $(shell git describe --tags --always)
 BUILD := $(shell git rev-parse --short HEAD)
 PROJECTNAME := $(shell basename "$(PWD)")
 
@@ -38,6 +38,7 @@ build: clean format
 ## all: Delete the image, binary, complete build, test and run coverage
 all: build test cover
 ## debug: Build local binary for debugging
+
 debug:
 	@echo "Deleting ${COP_LOCAL} binary"
 	@rm -rf ${COP_LOCAL}
