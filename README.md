@@ -1,6 +1,6 @@
 # Distributed AI and Analytics Stack
 
-![Architecture Diagram](./diagram.png)
+![Architecture Diagram](./arch_diagram.png)
 ## Pre-requisites
 | Required   | Version |
 |------------|---------|
