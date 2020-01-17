@@ -19,9 +19,12 @@ type RemoteFilterActionSpec struct {
 // RemoteFilterActionStatus defines the observed state of RemoteFilterAction
 // +k8s:openapi-gen=true
 type RemoteFilterActionStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+	Status       string   `json:"status"`
+	Action       string   `json:"action"`
+	Regex        string   `json:"regex"`
+	SourceLabels []string `json:"sourceLabels"`
+	TargetLabel  string   `json:"targetLabel"`
+	Replacement  string   `json:"replacement,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
